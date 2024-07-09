@@ -52,11 +52,11 @@ def shaixuan():
             pyautogui.click()
             wenzi= hanzi()
             print(wenzi)
-            if "弹射" in wenzi:
+            if "冥想" in wenzi:
                 print("_______111________")
-                if "电击伤害" in wenzi:
+                if "力量" in wenzi:
                     pyautogui.moveTo(buy_point_y,buy_point_x,  duration=0.4)
-                    # pyautogui.click()
+                    pyautogui.click()
 if __name__ == '__main__':
     x_point = left + 0.2*width - 30
     y_point = top + 0.37*height -20
@@ -97,6 +97,7 @@ if __name__ == '__main__':
         pyautogui.moveTo(left + 0.87 * width, top + 0.8 * height, duration=0.4)
         pyautogui.click()
         shaixuan()
+        time.sleep(1)
         keyboard.press_and_release('esc')
         time.sleep(0.1)
         keyboard.press("d")

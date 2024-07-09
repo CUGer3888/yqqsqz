@@ -505,6 +505,7 @@ def 找终点():
     移动到终点(拐点列表,zhongdian_x,zhongdian_y)
 def 移动到终点(inflection_points,zhongdian_x,zhongdian_y):
     speed_factor_1 = 0.04
+    print("终点")
     for i in range(len(inflection_points)):
         current_x_1, current_y_1 = inflection_points[i]
         if i + 1 < len(inflection_points):
@@ -514,23 +515,23 @@ def 移动到终点(inflection_points,zhongdian_x,zhongdian_y):
             pass
         dx_1 = zhongdian_x - 中心点[0]
         dy_1 = zhongdian_y- 中心点[1]
-
+        speed_factor = 0.4
         if dx_1 >= 0:
             keyboard.press('s')
-            time.sleep(abs(dx) * speed_factor)
+            time.sleep(abs(dx_1) * speed_factor)
             keyboard.release('s')
         elif dx_1 < 0:
             keyboard.press('w')
-            time.sleep(abs(dx) * speed_factor)
+            time.sleep(abs(dx_1) * speed_factor)
             keyboard.release('w')
 
         if dy_1 >= 0:
             keyboard.press('d')
-            time.sleep(abs(dy) * speed_factor)
+            time.sleep(abs(dy_1) * speed_factor)
             keyboard.release('d')
         elif dy_1 < 0:
             keyboard.press('a')
-            time.sleep(abs(dy) * speed_factor)
+            time.sleep(abs(dy_1) * speed_factor)
             keyboard.release('a')
     keyboard.press('f')
     exit()

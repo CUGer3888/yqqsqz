@@ -304,6 +304,7 @@ while True:
         # 使用A星算法寻找路径
         path = A星(start, goal, grid)
         # 如果路径不为空，则执行移动
+        找终点()
         if path:
             print("开始移动")
             拐点列表 = 寻找拐点(path)
@@ -327,8 +328,9 @@ while True:
             start = Node(中心点[0], 中心点[1])
             goal = Node(子目标点[0], 子目标点[1])
             print(子目标点)
-        卡墙()
-        找终点()
+        ()
+
+        卡墙
     except Exception as e:
         print(f'发生错误: {e}')
         print('随机移动')

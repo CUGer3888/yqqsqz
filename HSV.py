@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QTimer
 from PIL import ImageGrab
 import cv2
 import numpy as np
-
+import time
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -58,6 +58,12 @@ class MainWindow(QWidget):
         self.labels[index].setText(str(value))
         self.line_edits[index].setText(str(value))
 
+        # 更新颜色检测范围
+        if index < 3:  # 前三个滑块对应 lower_blue
+            self.lower_blue[index % 3] = value
+        else:  # 后三个滑块对应 upper_blue
+            self.upper_blue[(index - 3) % 3] = value
+
     def validateInput(self, text):
         sender = self.sender()
         index = self.line_edits.index(sender)
@@ -83,26 +89,25 @@ class MainWindow(QWidget):
             print("Invalid input. Please enter a number.")
 
     def detectColors(self):
-
         region = (1366, 275, 1566, 475)
-
         partial_screen = ImageGrab.grab(bbox=region)
-
         screen_array = np.array(partial_screen)
+        screen_array_bgr = cv2.cvtColor(screen_array, cv2.COLOR_BGR2RGB)
 
-        screen_array_hsv = cv2.cvtColor(screen_array, cv2.COLOR_RGB2HSV)
+        screen_array_hsv = cv2.cvtColor(screen_array_bgr, cv2.COLOR_RGB2HSV)
 
+        # 使用更新后的颜色范围
         lower_blue = self.lower_blue
         upper_blue = self.upper_blue
 
         mask = cv2.inRange(screen_array_hsv, lower_blue, upper_blue)
-
         coordinates = np.column_stack(np.where(mask == 255))
 
-        for x, y in coordinates:
-            cv2.circle(screen_array, (x, y), 5, (0, 0, 0), -1)
+        # 找到颜色范围内的像素坐标
 
-        screen_array_bgr = cv2.cvtColor(screen_array, cv2.COLOR_RGB2BGR)
+
+        for x, y in coordinates:
+            cv2.circle(screen_array_bgr, (y, x), 5, (0, 0, 0), -1)
         cv2.imshow('Screen with marked blue', screen_array_bgr)
         cv2.waitKey(1)
 if __name__ == "__main__":
